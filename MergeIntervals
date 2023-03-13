@@ -1,0 +1,18 @@
+class Solution {
+public:
+    vector<vector<int>> merge(vector<vector<int>>& intervals) {
+        std::sort(intervals.begin(), intervals.end(), [](vector<int> const &first, vector<int> const &second){
+            return first.at(0) < second.at(0);
+        });
+        vector<vector<int>> output {intervals.at(0)};
+        for(auto const &interval: intervals){
+            int lastEnd = output.back().at(1);
+            if (interval.at(0) <= lastEnd) {
+                output.back().at(1) = max(lastEnd, interval.at(1));
+            } else {
+                output.push_back({interval.at(0), interval.at(1)});
+            }
+        }
+        return output;
+    }
+};
