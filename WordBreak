@@ -1,0 +1,21 @@
+class Solution {
+public:
+    bool wordBreak(string s, vector<string>& wordDict) {
+        vector<bool> symbSubarrCache(s.length()+1, false);
+
+        symbSubarrCache.at(s.length()) = true;
+        
+        for(int i = s.length() - 1; i >= 0; i--){
+            for(const auto &word: wordDict){
+                if((i + word.length() <= s.length()) &&
+                 (s.substr(i, word.length()) == word )){
+                    symbSubarrCache.at(i) = symbSubarrCache.at(i + word.length());
+                }
+                if(symbSubarrCache.at(i)){
+                    break;
+                }
+            }
+        }
+        return symbSubarrCache.at(0);
+    }
+};
