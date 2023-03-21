@@ -1,0 +1,20 @@
+class Solution {
+public:
+    vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
+        std::vector<vector<int>> resultVector;
+        for(int i = 0; i < intervals.size(); i++){
+            if(newInterval[1] < intervals.at(i)[0]){
+                resultVector.push_back(newInterval);
+                resultVector.insert(resultVector.end(), intervals.begin()+i, intervals.end());
+                return resultVector;
+            } else if(newInterval[0] > intervals.at(i)[1]){
+                resultVector.push_back(intervals.at(i)); 
+            } else {
+                newInterval[0] = min(newInterval[0], intervals.at(i)[0]);
+                newInterval[1] = max(newInterval[1], intervals.at(i)[1]);
+            }
+        }
+        resultVector.push_back(newInterval);
+        return resultVector;
+    }
+};
