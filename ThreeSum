@@ -1,0 +1,31 @@
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        vector<vector<int>> result;
+        std::sort(nums.begin(), nums.end());
+        for(int index = 0; index < nums.size(); index++){
+            if(index > 0 && (nums.at(index) == nums.at(index - 1))){
+                continue;
+            }
+            int left = index + 1;
+            int right = nums.size() - 1;
+            while(left < right){
+                int threeSum = nums.at(index) + nums.at(left) + nums.at(right);
+                if(threeSum > 0){
+                    right--;
+                } else if(threeSum < 0){
+                    left++;
+                } else {
+                    vector<int> res {nums.at(index), nums.at(left), nums.at(right)};
+                    result.push_back(res);
+                    left++;
+                    while((nums.at(left) == nums.at(left-1)) && (left < right)){
+                        left++;
+                    }
+                }
+            }
+
+        }
+        return result;
+    }
+};
